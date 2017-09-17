@@ -1,23 +1,38 @@
 function split(wholeArray) {
-  var mid = Math.floor((wholeArray.length)/2);
-  var firstHalf = wholeArray.slice(0,mid)
-  var secondHalf = wholeArray.slice(mid)
-       return [firstHalf, secondHalf];
-      }
- function merge(arr1, arr2){
-  let mergedArray = [];
-  while(arr1.length || arr2.length){
-      if(arr1[0] <= arr2[0]){
-          mergedArray.push(arr1[0])
-          arr1.shift();
-      } else{
-       mergedArray.push(arr2[0])  
-       arr2.shift();
-      }
+  let mid = wholeArray.length / 2;
+  let left = wholeArray.slice(0, mid)
+  let right = wholeArray.slice(mid)
+
+  return [left, right];
+}
+
+function merge(left, right) {
+  let mergedArray = [],
+      leftIdx = 0;
+      rightIdx = 0;
+
+  while (leftIdx < left.length && rightIdx < right.length) {
+    if (left[leftIdx] < right[rightIdx]) {
+      mergedArray.push(left[leftIdx]);
+      leftIdx++;
+    } else {
+      mergedArray.push(right[rightIdx]);
+      rightIdx++;
+    }
   }
-     return mergedArray
+
+  for (; leftIdx < left.length; leftIdx++) mergedArray.push(left[leftIdx]);
+  for (; rightIdx < right.length; rightIdx++) mergedArray.push(right[rightIdx]);
+
+  return mergedArray;
  }
+
  function mergeSort(array) {
-     
-  
+     if (array.length < 2) return array;
+
+     let splitted = split(array);
+     let left = splitted[0];
+     let right = splitted[1];
+
+     return merge(mergeSort(left), mergeSort(right));
   }

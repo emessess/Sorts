@@ -1,21 +1,24 @@
-function bubbleSort(array){
-  var swaps = 0;
-  do {
-   swaps = 0;
-   for(var i = 0; i < array.length; i++){
-       if(array[i] > array[i+1]){
-           var temp = array[i];
-           array[i] = array[i+1]; 
-           array[i+1] = temp;
-      //   swap(array[i], array[i+1]);
-        swaps++;
-          }
-       }
-   } while(swaps > 0);
-  return array;
+'use strict';
+
+function bubbleSort(array) {
+  let sorted = false;
+  for (let end = array.length; end > 0 && !sorted; end--) {
+    sorted = true;
+    for (let j = 0; j < end; j++){
+      if(!inOrder(array, j)) {
+        swap(array, j);
+        sorted = false;
+      }
+    }
   }
-  // function swap(num1, num2){
-  //     // let temp = num1;
-  //     // num1 = num2;
-  //     // num2 = temp;
-  // }
+  return array;
+} 
+
+function inOrder(arr, index) {
+  if (index === arr.length - 1) return true;
+  return (arr[index] < arr[index + 1]);
+}
+
+function swap(arr, index) {
+  [arr[index], arr[index + 1]] = [arr[index + 1], arr[index]];
+}
